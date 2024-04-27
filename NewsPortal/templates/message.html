@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+{% if pole_ar_ne == 'NE' %}
+<h1>Новый пост</h1>
+<h2><a href="{{ link }}">{{ title }}</a> - {{ text|truncatechars:50 }}</h2>
+{% else %}
+<h1>Новая статья</h1>
+<h2><a href="{{ link }}">{{ title }}</a> - {{ text|truncatechars:50 }}</h2>
+{% endif %}
+</body>
+</html>

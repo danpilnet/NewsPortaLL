@@ -1,0 +1,33 @@
+
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Post
+{% endblock title %}
+
+
+{% block content %}
+
+{% if request.path == '/articles/create/' %}
+
+<h1 align="center">Создать статью</h1>
+
+{% else %}
+
+<h1 align="center">Создать новость</h1>
+
+{% endif %}
+
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Сохранить">
+</form>
+
+{% endblock content %}
+
+
+
+
+
+
+

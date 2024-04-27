@@ -1,0 +1,9 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+{% if PostCreate %}
+    <h1>Уважаемый {{ author }}, нельзя публиковать более трёх новостей в сутки!</h1>
+{% else %}
+    <h1>Уважаемый {{ author }}, нельзя публиковать более трёх статей в сутки!</h1>
+{% endif %}
+{% endblock content %}

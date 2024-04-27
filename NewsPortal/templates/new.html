@@ -1,0 +1,15 @@
+
+{% extends 'flatpages/default.html' %}
+
+{% load custom_censure %}
+
+
+{% block title %}
+Post
+{% endblock title %}
+
+{% block content %}
+<h3 align="center">Новость</h3>
+<h4>{{ new.text|censor }}</h4>
+<h4>Дата публикации: {{ new.add_time }}</h4>
+{% endblock content %}
