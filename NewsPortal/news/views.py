@@ -4,10 +4,9 @@ from.models import Post, Category, Subscribe
 from .filters import PostFilter
 from. forms import PostForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
 from django.views import View
 from django.shortcuts import redirect, render
+from .tasks import send_email_task
 
 
 
@@ -71,14 +70,14 @@ class PostCreate(PermissionRequiredMixin, CreateView, LoginRequiredMixin):
 
     def form_valid(self, form):
         post = form.save(commit=False)
-        today = datetime.today()
-        post_limit = Post.objects.filter(author=post.author, add_time__date=today).count()
-        if post_limit >= 3:
-            return render(self.request, 'news_limit.html', {'author': post.author})
+        # today = datetime.today()
+        # post_limit = Post.objects.filter(author=post.author, add_time__date=today).count()
+        # if post_limit >= 3:
+        #     return render(self.request, 'news_limit.html', {'author': post.author})
         if self.request.path =='/news/create/':
             post.pole_ar_ne = 'NE'
         post.save()
-
+        send_email_task.delay(post.pk)
         return super().form_valid(form)
 
 

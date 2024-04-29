@@ -8,8 +8,22 @@
     <h2>Здравствуйте! Новости за прошедшую неделю</h2>
     <ul>
         {% for post in posts %}
-        <li><a href="{{ link }}{{ post.title }}"></a></li>
+        <li><a href="{{ link }}/news/{{ post.id}}/"></a>{{ post.zagolovok }}</li>
         {% endfor %}
     </ul>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

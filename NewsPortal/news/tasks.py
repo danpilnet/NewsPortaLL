@@ -7,7 +7,7 @@ import datetime
 from django.utils import timezone
 
 
-@shared_task()
+@shared_task
 def send_email_task(pk):
     post = Post.objects.get(pk=pk)
     categories = post.category.all()
@@ -38,19 +38,19 @@ def send_email_task(pk):
 
 
 
-@shared_task()
-def sending(preview, pk, title, subscribers):
+@shared_task
+def sending():
     today = timezone.now()
     last_week = today - datetime.timedelta(days=7)
     posts = Post.objects.filter(add_time__gte=last_week)
-    categories = set(posts.values_list('category', flat=True))
+    categories = set(posts.values_list('category__name', flat=True))
     subscribers = set(Category.objects.filter(name__in=categories).values_list('subscribe', flat=True))
 
 
     html_content = render_to_string(
         'daily_post.html',
         {'link': settings.SITE_URL,
-         'post': posts,
+         'posts': posts,
          }
     )
 
@@ -63,8 +63,5 @@ def sending(preview, pk, title, subscribers):
 
     )
 
-    messages.attach_alternative(html_content, 'text.html')
+    messages.attach_alternative(html_content, 'text/html')
     messages.send()
-
-
-
